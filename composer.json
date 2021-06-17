@@ -1,0 +1,18 @@
+{
+    "name": "win10/mvc-test",
+    "authors": [
+        {
+            "name": "Damian",
+            "email": "dhfxblog@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.3"
+    },
+    "description": "Testowa aplikacja",
+    "autoload": {
+        "psr-4": {
+            "app\\": "./"
+        }
+    }
+}
