@@ -15,7 +15,13 @@ use app\core\Aplication;
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>
+        <?php
+        if ($this->title != '') {
+            echo $this->title;
+        } else {
+            echo 'MVC app';
+        } ?></title>
 </head>
 
 <body>
@@ -31,7 +37,7 @@ use app\core\Aplication;
                         <a class="nav-link active" aria-current="page" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/user">User</a>
+                        <a class="nav-link" href="/contact">Contact</a>
                     </li>
 
                 </ul>
@@ -61,9 +67,9 @@ use app\core\Aplication;
         </div>
     </nav>
     <div class="container">
-        <?php if (Aplication::$app->session->getFlash('register')) : ?>
+        <?php if (Aplication::$app->session->getFlash('success')) : ?>
             <div class="alert alert-success">
-                <?php echo Aplication::$app->session->getFlash('register'); ?>
+                <?php echo Aplication::$app->session->getFlash('success'); ?>
             </div>
         <?php endif; ?>
         {{content}}

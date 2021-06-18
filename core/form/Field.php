@@ -4,38 +4,30 @@ namespace app\core\form;
 
 use app\core\Model;
 
-class Field
+class Field extends BaseField
 {
-    public Model $model;
+
     public string $attribute;
     public const TYPE_PASS = "password";
     public const TYPE_TXT = "text";
     public const TYPE_EMAIL = "email";
     public string $type = 'text';
 
-
     public function __construct(Model $model, $attribute)
     {
-        $this->model = $model;
-        $this->attribute = $attribute;
+        parent::__construct($model, $attribute);
     }
-    public function __toString()
-    {
 
+
+    public function renderInput(): string
+    {
         return sprintf(
-            '
-        <div class="form-group">
-            <label class="form-label">%s</label>
-            <input type="%s"  name="%s" value="%s" class="form-control %s">
-            <div class="invalid-feedback">%s</div>    
-        </div>
-        ',
-            $this->model->labels()[$this->attribute] ?? $this->attribute,
+            '<input type="%s"  name="%s" value="%s" class="form-control %s">',
             $this->type,
             $this->attribute,
             $this->model->{$this->attribute},
             $this->model->hasError($this->attribute) ? 'is-invalid' : '',
-            $this->model->getFirstError($this->attribute)
+
         );
     }
     public function password()

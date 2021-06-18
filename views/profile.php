@@ -1,3 +1,4 @@
+<?php $this->title = "profile" ?>
 <div class="card" style="width: 18rem;">
     <h1>Profile page</h1>
     <div class="card-body">

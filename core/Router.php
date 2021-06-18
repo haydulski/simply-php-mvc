@@ -9,6 +9,7 @@ class Router
     protected array $routes = [];
     public Requests $requests;
     public Response $response;
+    public string $title = '';
     public function __construct(Requests $requests, Response $response)
     {
         $this->requests = $requests;
@@ -39,6 +40,7 @@ class Router
         if (is_string($callback)) {
             $content = $this->renderView($callback, null);
             $layout = $this->renderLayout();
+
             echo str_replace('{{content}}', $content, $layout);
             exit;
         }
@@ -58,6 +60,7 @@ class Router
     }
     public function renderViewOutside($path, $params = null)
     {
+
         $content = $this->renderView($path, $params);
         $layout = $this->renderLayout();
         echo str_replace('{{content}}', $content, $layout);

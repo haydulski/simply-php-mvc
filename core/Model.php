@@ -12,7 +12,7 @@ abstract class Model
     public const RULE_UNIQUE = "unique";
     public const RULE_NOEMAIL = "noemail";
     public const RULE_WRONGPASS = "wrongpass";
-    public array $errors = ["name" => [], "surname" => [], "email" => [], "password" => [], "passwordConfirm" => []];
+    public array $errors = ["name" => [], "surname" => [], "email" => [], "password" => [], "passwordConfirm" => [], "message" => []];
 
     public function loadData($data)
     {
@@ -65,7 +65,7 @@ abstract class Model
                 }
             }
         }
-        if ($this->errors['name'] === [] && $this->errors['surname'] === [] && $this->errors['email'] === [] && $this->errors['password'] === [] && $this->errors['passwordConfirm'] === []) {
+        if ($this->errors['name'] === [] && $this->errors['surname'] === [] && $this->errors['email'] === [] && $this->errors['password'] === [] && $this->errors['passwordConfirm'] === [] && $this->errors['message'] === []) {
 
             return true;
         } else {

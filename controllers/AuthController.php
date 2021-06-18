@@ -42,7 +42,7 @@ class AuthController extends Controller
             $registerData->loadData($req->getBody());
 
             if ($registerData->validate() && $registerData->register()) {
-                Aplication::$app->session->setFlash('register', 'Your account was registered');
+                Aplication::$app->session->setFlash('success', 'Your account was registered');
                 Aplication::$app->response->redirect('/');
                 exit;
             }
