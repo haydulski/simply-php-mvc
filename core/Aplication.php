@@ -43,7 +43,13 @@ class Aplication
     }
     public function run()
     {
-        $this->router->resolve();
+        try {
+            echo $this->router->resolve();
+        } catch (\Exception $e) {
+            echo $this->controller->render('_error', [
+                'exception' => $e
+            ]);
+        }
     }
     public function getController()
     {
