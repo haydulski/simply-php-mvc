@@ -30,9 +30,6 @@ class Router
         $callback = $this->routes[$method][$path] ?? false;
         if ($callback === false) {
             $this->response->setResponse(404);
-            // $layout = $this->renderLayout();
-            // $content = $this->renderView("_error", null);
-            // echo str_replace('{{content}}', $content, $layout);
             throw new NotFoundException();
 
             exit;
@@ -45,8 +42,7 @@ class Router
             exit;
         }
         if (is_array($callback)) {
-            // Aplication::$app->controller = new $callback[0]();
-            // Aplication::$app->controller->action = $callback[1];
+
             $controller = new $callback[0]();
             Aplication::$app->controller = $controller;
             $controller->action = $callback[1];

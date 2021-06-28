@@ -15,20 +15,24 @@ class User extends DbModel
     public const STATUS_ACTIVE = 1;
     public const STATUS_DELETED = 2;
     public int $status = self::STATUS_INACTIVE;
+
     public function register()
     {
         $this->status = self::STATUS_INACTIVE;
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
         return $this->save();
     }
+
     public static function tableName(): string
     {
         return "user";
     }
+
     public function attributes(): array
     {
         return ["name", "surname", "email", "password", "status"];
     }
+
     public function rules(): array
     {
         return [
@@ -39,10 +43,12 @@ class User extends DbModel
             'passwordConfirm' => [self::RULE_REQUIRED, [self::RULE_MATCH, 'match' => 'password']],
         ];
     }
+
     public function labels(): array
     {
         return ['name' => 'Name', 'surname' => 'Last name', 'email' => 'Your email', 'password' => 'Password', 'passwordConfirm' => 'Confirm password'];
     }
+
     public static function primaryKey(): string
     {
         return "ID";

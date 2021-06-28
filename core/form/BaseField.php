@@ -7,12 +7,15 @@ use app\core\Model;
 abstract class BaseField
 {
     public Model $model;
+
     public function __construct(Model $model, $attribute)
     {
         $this->model = $model;
         $this->attribute = $attribute;
     }
+
     abstract function renderInput(): string;
+
     public function __toString()
     {
 

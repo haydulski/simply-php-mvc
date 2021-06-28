@@ -9,12 +9,14 @@ use app\core\Response;
 use app\models\User;
 use app\models\LoginForm;
 use app\core\middlewares\AuthMiddleware;
+use app\models\AddTodoForm;
 
 class AuthController extends Controller
 {
     public function __construct()
     {
         $this->registerMiddleware(new AuthMiddleware(['profile']));
+        $this->registerMiddleware(new AuthMiddleware(['addNewTodo']));
     }
     public function login(Requests $req, Response $res)
     {
@@ -68,5 +70,21 @@ class AuthController extends Controller
             "surname" => Aplication::$app->user->{'surname'},
         ];
         return $this->render('profile', $params);
+    }
+    public function addNewTodo(Requests $req, Response $res)
+    {
+        $todoForm = new AddTodoForm();
+        if ($req->getMethod() === "POST") {
+            $todoForm->loadData($req->getBody());
+            var_dump($_POST);
+            if ($todoForm->validate()) {
+                Aplication::$app->session->setFlash('success', 'You added new task');
+                Aplication::$app->response->redirect('/profile');
+                exit;
+            }
+
+            return $this->render('addtodo', ["model" => $todoForm]);
+        }
+        $this->render('addtodo', ["model" => $todoForm]);
     }
 }
