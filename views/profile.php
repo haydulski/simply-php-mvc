@@ -1,4 +1,15 @@
-<?php $this->title = "profile" ?>
+<?php
+
+use app\models\TodoForm;
+
+$this->title = "profile" ?>
+
+<?php
+$toDoForm1 =  new TodoForm();
+$todoList = $toDoForm1->getAllTasks();
+$listNumber = 0;
+
+?>
 <div class="row mb-5 mt-5">
     <div class="col-12">
         <h1>Profile page</h1>
@@ -22,40 +33,35 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td class="td-task">Odbierz pranie</td>
-                <td class="td-status">
-                    <p class="btn btn-danger">To do</p>
-                </td>
-                <td class="td-edit"><button class="btn btn-outline-warning"><i class="bi bi-pencil-square"></i></button> </td>
-                <td class="td-remove"><button class="btn btn-outline-danger"><i class="bi bi-trash"></i></button></td>
-            </tr>
-            <tr>
-                <th scope="row">1</th>
-                <td class="td-task">Odbierz pranie</td>
-                <td class="td-status">
+            <?php foreach ($todoList as $todo) : ?>
+                <tr>
+                    <?php $listNumber += 1; ?>
+                    <th scope="row"><?php echo $listNumber; ?></th>
+                    <td class="td-task"><?php echo $todo['Task'] ?></td>
+                    <td class="td-status">
+                        <?php if ($todo['Status'] === '-1') : ?>
+                            <p class="btn btn-danger">To do</p>
+                        <?php elseif ($todo['Status'] === '1') : ?>
+                            <p class="btn btn-success">Complete</p>
+                        <?php else : ?>
+                            <p class="btn btn-info">In progress</p>
+                        <?php endif; ?>
+                    </td>
+                    <td class="td-edit"><a href="/edittodo?id=<?php echo $todo['ID'] ?>" class="btn btn-outline-warning"><i class="bi bi-pencil-square"></i></a> </td>
+                    <td class="td-remove">
+                        <form action="" method="post">
+                            <input type="hidden" name="id" value="<?php echo $todo['ID'] ?>">
+                            <button type="submit" class="btn btn-outline-danger"><i class="bi bi-trash"></i></button>
+                        </form>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
 
-                    <p class="btn btn-info">In progress</p>
-
-                </td>
-                <td class="td-edit"><button class="btn btn-outline-warning"><i class="bi bi-pencil-square"></i></button> </td>
-                <td class="td-remove"><button class="btn btn-outline-danger"><i class="bi bi-trash"></i></button></td>
-            </tr>
-            <tr>
-                <th scope="row">1</th>
-                <td class="td-task">Odbierz pranie</td>
-                <td class="td-status">
-                    <p class="btn btn-success">Complete</p>
-                </td>
-                <td class="td-edit"><button class="btn btn-outline-warning"><i class="bi bi-pencil-square"></i></button> </td>
-                <td class="td-remove"><button class="btn btn-outline-danger"><i class="bi bi-trash"></i></button></td>
-            </tr>
         </tbody>
     </table>
     <div class="row">
         <div class="col-12">
-            <button type="button" class="btn btn-secondary">Add new task</button>
+            <a href="/addtodo" class="btn btn-secondary">Add new task</a>
         </div>
     </div>
 </div>

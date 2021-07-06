@@ -30,7 +30,10 @@ $app->router->get('/register', [AuthController::class, 'register']);
 $app->router->post('/register', [AuthController::class, 'register']);
 $app->router->get('/logout', [AuthController::class, 'logout']);
 $app->router->get('/profile', [AuthController::class, 'profile']);
+$app->router->post('/profile', [AuthController::class, 'profile']);
 $app->router->get('/addtodo', [AuthController::class, 'addNewTodo']);
 $app->router->post('/addtodo', [AuthController::class, 'addNewTodo']);
+$app->router->get('/edittodo', [AuthController::class, 'editTodo']);
+$app->router->post('/edittodo', [AuthController::class, 'editTodo']);
 
 $app->run();

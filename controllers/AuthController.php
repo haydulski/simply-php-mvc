@@ -9,7 +9,7 @@ use app\core\Response;
 use app\models\User;
 use app\models\LoginForm;
 use app\core\middlewares\AuthMiddleware;
-use app\models\AddTodoForm;
+use app\models\TodoForm;
 
 class AuthController extends Controller
 {
@@ -17,6 +17,7 @@ class AuthController extends Controller
     {
         $this->registerMiddleware(new AuthMiddleware(['profile']));
         $this->registerMiddleware(new AuthMiddleware(['addNewTodo']));
+        $this->registerMiddleware(new AuthMiddleware(['editTodo']));
     }
     public function login(Requests $req, Response $res)
     {
@@ -63,21 +64,35 @@ class AuthController extends Controller
         Aplication::$app->logout();
         $res->redirect('/');
     }
-    public function profile()
+    public function profile(Requests $req)
     {
+        $todoForm = new TodoForm();
+        if ($req->getMethod() === "POST") {
+            $idOfTask = $_POST['id'];
+
+            if ($idOfTask) {
+                $todoForm->deleteTask($idOfTask);
+            }
+
+            $params = [
+                "name" => Aplication::$app->user->{'name'},
+                "surname" => Aplication::$app->user->{'surname'},
+            ];
+            return $this->render('profile', $params);
+        }
         $params = [
             "name" => Aplication::$app->user->{'name'},
             "surname" => Aplication::$app->user->{'surname'},
         ];
         return $this->render('profile', $params);
     }
-    public function addNewTodo(Requests $req, Response $res)
+    public function addNewTodo(Requests $req)
     {
-        $todoForm = new AddTodoForm();
+        $todoForm = new TodoForm();
         if ($req->getMethod() === "POST") {
             $todoForm->loadData($req->getBody());
-            var_dump($_POST);
-            if ($todoForm->validate()) {
+
+            if ($todoForm->validate() && $todoForm->addNewTask()) {
                 Aplication::$app->session->setFlash('success', 'You added new task');
                 Aplication::$app->response->redirect('/profile');
                 exit;
@@ -86,5 +101,22 @@ class AuthController extends Controller
             return $this->render('addtodo', ["model" => $todoForm]);
         }
         $this->render('addtodo', ["model" => $todoForm]);
+    }
+    public function editTodo(Requests $req)
+    {
+        $todoForm = new TodoForm();
+        $todoId = $_GET['id'];
+        if ($req->getMethod() === "POST") {
+            $newValue = $_POST['status'];
+
+            if ($todoForm->editTask($todoId, $newValue)) {
+                Aplication::$app->session->setFlash('success', 'Task has been edited');
+                Aplication::$app->response->redirect('/profile');
+                exit;
+            }
+
+            return $this->render('editTodo', ["model" => $todoForm]);
+        }
+        $this->render('editTodo', ["model" => $todoForm]);
     }
 }
