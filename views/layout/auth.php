@@ -26,6 +26,7 @@ use app\core\Aplication;
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
+
             <a class="navbar-brand" href="#">Navbar</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -41,6 +42,7 @@ use app\core\Aplication;
 
                 </ul>
                 <?php if (Aplication::isGuest()) : ?>
+
                     <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/login">Login</a>
@@ -65,6 +67,11 @@ use app\core\Aplication;
             </div>
         </div>
     </nav>
+    <?php if (Aplication::$app->session->getFlash('danger')) : ?>
+        <div class="alert alert-danger">
+            <?php echo Aplication::$app->session->getFlash('danger'); ?>
+        </div>
+    <?php endif; ?>
     <div class="container">
         {{content}}
     </div>

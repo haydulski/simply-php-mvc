@@ -12,7 +12,8 @@ abstract class Model
     public const RULE_UNIQUE = "unique";
     public const RULE_NOEMAIL = "noemail";
     public const RULE_WRONGPASS = "wrongpass";
-    public array $errors = ["name" => [], "surname" => [], "email" => [], "password" => [], "passwordConfirm" => [], "message" => [], "task" => [], "status" => []];
+    public const RULE_CAPTCHA = "captcha";
+    public array $errors = ["name" => [], "surname" => [], "email" => [], "password" => [], "passwordConfirm" => [], "message" => [], "task" => [], "status" => [], "passtext" => []];
 
     public function loadData($data)
     {
@@ -31,6 +32,8 @@ abstract class Model
     {
         foreach ($this->rules() as $attribute => $rules) {
             $value = $this->{$attribute};
+            // var_dump($value);
+
             foreach ($rules as $rule) {
                 $rulename = $rule;
                 if (!is_string($rule)) {
@@ -51,6 +54,9 @@ abstract class Model
                 if ($rulename === self::RULE_MATCH && $value != $this->{$rule['match']}) {
                     $this->addError($attribute, self::RULE_MATCH);
                 }
+                if ($rulename === self::RULE_CAPTCHA && $value != '10') {
+                    $this->addError($attribute, self::RULE_CAPTCHA);
+                }
                 if ($rulename === self::RULE_UNIQUE) {
                     $className = $rule['class'];
                     $uniqueAttr = $rule['attribute'] ?? $attribute;
@@ -65,7 +71,7 @@ abstract class Model
                 }
             }
         }
-        if ($this->errors['name'] === [] && $this->errors['surname'] === [] && $this->errors['email'] === [] && $this->errors['password'] === [] && $this->errors['passwordConfirm'] === [] && $this->errors['message'] === [] && $this->errors['task'] === []) {
+        if ($this->errors['name'] === [] && $this->errors['surname'] === [] && $this->errors['email'] === [] && $this->errors['password'] === [] && $this->errors['passwordConfirm'] === [] && $this->errors['message'] === [] && $this->errors['task'] === [] && $this->errors['passtext'] === []) {
 
             return true;
         } else {
@@ -88,6 +94,7 @@ abstract class Model
             self::RULE_UNIQUE => "Your email is not unique and already exist",
             self::RULE_NOEMAIL => "Your email are not exist",
             self::RULE_WRONGPASS => "Incorrect password",
+            self::RULE_CAPTCHA => "Incorrect number",
         ];
     }
     public function hasError($attr)

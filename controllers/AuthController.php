@@ -30,6 +30,7 @@ class AuthController extends Controller
                 return;
             }
             $this->setLayout('auth');
+            Aplication::$app->session->setFlash('danger', 'Confirm your humanity...');
             $this->render('login', ["model" => $loginData]);
             return;
         } else {
@@ -54,9 +55,12 @@ class AuthController extends Controller
             // echo "</pre>";
             // exit;
             $this->setLayout('auth');
+            Aplication::$app->session->setFlash('danger', 'Confirm your humanity...');
             return $this->render('register', ["model" => $registerData]);
         }
+
         $this->setLayout('auth');
+
         return $this->render('register', ["model" => $registerData]);
     }
     public function logout(Requests $req, Response $res)

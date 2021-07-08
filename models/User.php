@@ -11,6 +11,8 @@ class User extends DbModel
     public string $email = '';
     public string $password = '';
     public string $passwordConfirm = '';
+    public string $passtext = '';
+
     public const STATUS_INACTIVE = 0;
     public const STATUS_ACTIVE = 1;
     public const STATUS_DELETED = 2;
@@ -30,7 +32,7 @@ class User extends DbModel
 
     public function attributes(): array
     {
-        return ["name", "surname", "email", "password", "status"];
+        return ["name", "surname", "email", "password", "status", "passtext"];
     }
 
     public function rules(): array
@@ -41,6 +43,7 @@ class User extends DbModel
             'email' => [self::RULE_REQUIRED, self::RULE_EMAIL, [self::RULE_UNIQUE, 'class' => self::class]],
             'password' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 4], [self::RULE_MAX, 'max' => 10]],
             'passwordConfirm' => [self::RULE_REQUIRED, [self::RULE_MATCH, 'match' => 'password']],
+            'passtext' => [self::RULE_CAPTCHA]
         ];
     }
 

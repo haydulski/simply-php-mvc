@@ -34,6 +34,7 @@ class SiteController extends Controller
                 Aplication::$app->response->redirect('/contact');
                 exit;
             }
+            Aplication::$app->session->setFlash('danger', 'Confirm your humanity...');
             $this->render('contact', ["model" => $contactData]);
             return;
         } else {

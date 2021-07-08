@@ -73,6 +73,11 @@ use app\core\Aplication;
                 <?php echo Aplication::$app->session->getFlash('success'); ?>
             </div>
         <?php endif; ?>
+        <?php if (Aplication::$app->session->getFlash('danger')) : ?>
+            <div class="alert alert-danger">
+                <?php echo Aplication::$app->session->getFlash('danger'); ?>
+            </div>
+        <?php endif; ?>
         {{content}}
     </div>
 
