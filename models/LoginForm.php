@@ -10,7 +10,9 @@ class LoginForm extends Model
     public string $email = '';
     public string $password = '';
     public string $passtext = '';
+
     public User $user;
+
     public function rules(): array
     {
         return [
@@ -19,15 +21,18 @@ class LoginForm extends Model
             'passtext' => [self::RULE_CAPTCHA]
         ];
     }
+
     public function attributes(): array
     {
         return ["email", "password", "passtext"];
     }
+
     public function labels(): array
     {
         return ["email" => "Your email", "password" => "Password"];
     }
-    public function login()
+
+    public function login(): Aplication|bool
     {
         $user = User::findUser(['email' => $this->email]);
         if (!$user) {

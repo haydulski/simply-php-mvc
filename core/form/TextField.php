@@ -6,14 +6,10 @@ use app\core\Model;
 
 class TextField extends BaseField
 {
-
-
-
     public function __construct(Model $model, $attribute)
     {
         parent::__construct($model, $attribute);
     }
-
 
     public function renderInput(): string
     {

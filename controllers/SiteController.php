@@ -6,19 +6,18 @@ namespace app\controllers;
 
 use app\core\Controller;
 use app\core\Requests;
-use app\core\Response;
 use app\models\Contact;
 use app\core\Aplication;
 
 class SiteController extends Controller
 {
-    public function handleContact(Requests $req)
+    public function handleContact(Requests $req): string
     {
         $body = $req->getBody();
         return "Handled subimitng data";
     }
 
-    public function handleHome()
+    public function handleHome(): Aplication
     {
         $params = [
             "name" => "Damian wita",
@@ -26,7 +25,7 @@ class SiteController extends Controller
         return $this->render('home', $params);
     }
 
-    public function contact(Requests $req, Response $res)
+    public function contact(Requests $req): void
     {
         $contactData = new Contact();
 

@@ -2,11 +2,12 @@
 
 class m0001_init
 {
-    public function up()
+    public function up(): void
     {
         echo "Function up" . PHP_EOL;
     }
-    public function down()
+
+    public function down(): string
     {
         return "Function down";
     }

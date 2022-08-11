@@ -16,9 +16,10 @@ class User extends DbModel
     public const STATUS_INACTIVE = 0;
     public const STATUS_ACTIVE = 1;
     public const STATUS_DELETED = 2;
+
     public int $status = self::STATUS_INACTIVE;
 
-    public function register()
+    public function register(): bool
     {
         $this->status = self::STATUS_INACTIVE;
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);

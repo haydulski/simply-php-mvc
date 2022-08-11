@@ -22,7 +22,7 @@ class AuthController extends Controller
         $this->registerMiddleware(new AuthMiddleware(['editTodo']));
     }
 
-    public function login(Requests $req, Response $res)
+    public function login(Requests $req, Response $res): void
     {
         $loginData = new LoginForm();
 
@@ -35,6 +35,7 @@ class AuthController extends Controller
             $this->setLayout('auth');
             Aplication::$app->session->setFlash('danger', 'Confirm your humanity...');
             $this->render('login', ["model" => $loginData]);
+
             return;
         } else {
             $this->setLayout('auth');
@@ -42,7 +43,7 @@ class AuthController extends Controller
         }
     }
 
-    public function register(Requests $req)
+    public function register(Requests $req): Aplication
     {
         $registerData = new User();
         if ($req->getMethod() === "POST") {
@@ -53,12 +54,9 @@ class AuthController extends Controller
                 Aplication::$app->response->redirect('/');
                 exit;
             }
-            // echo "<pre>";
-            // var_dump($registerData->errors);
-            // echo "</pre>";
-            // exit;
             $this->setLayout('auth');
             Aplication::$app->session->setFlash('danger', 'Confirm your humanity...');
+
             return $this->render('register', ["model" => $registerData]);
         }
 
@@ -67,13 +65,13 @@ class AuthController extends Controller
         return $this->render('register', ["model" => $registerData]);
     }
 
-    public function logout(Requests $req, Response $res)
+    public function logout(Requests $req, Response $res): void
     {
         Aplication::$app->logout();
         $res->redirect('/');
     }
 
-    public function profile(Requests $req)
+    public function profile(Requests $req): Aplication
     {
         $todoForm = new TodoForm();
         if ($req->getMethod() === "POST") {
@@ -97,7 +95,7 @@ class AuthController extends Controller
         return $this->render('profile', $params);
     }
 
-    public function addNewTodo(Requests $req)
+    public function addNewTodo(Requests $req): Aplication
     {
         $todoForm = new TodoForm();
         if ($req->getMethod() === "POST") {
@@ -114,7 +112,7 @@ class AuthController extends Controller
         $this->render('addtodo', ["model" => $todoForm]);
     }
 
-    public function editTodo(Requests $req)
+    public function editTodo(Requests $req): Aplication
     {
         $todoForm = new TodoForm();
         $todoId = $_GET['id'];

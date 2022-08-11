@@ -18,7 +18,6 @@ class Field extends BaseField
         parent::__construct($model, $attribute);
     }
 
-
     public function renderInput(): string
     {
 
@@ -31,12 +30,14 @@ class Field extends BaseField
 
         );
     }
-    public function password()
+
+    public function password(): string
     {
         $this->type = self::TYPE_PASS;
         return $this;
     }
-    public function email()
+
+    public function email(): string
     {
         $this->type = self::TYPE_EMAIL;
         return $this;

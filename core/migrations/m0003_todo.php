@@ -4,7 +4,7 @@
 
     class m0003_todo
     {
-        public function up()
+        public function up(): void
         {
             $db = Aplication::$app->db;
             $db->pdo->exec(
@@ -19,7 +19,8 @@
 
             echo "Todo added" . PHP_EOL;
         }
-        public function down()
+
+        public function down(): string
         {
             return "Function down";
         }

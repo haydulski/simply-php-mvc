@@ -9,7 +9,6 @@ class Router
     protected array $routes = [];
 
     public Requests $requests;
-
     public Response $response;
 
     public string $title = '';
@@ -30,24 +29,25 @@ class Router
         $this->routes['post'][$path] = $callback;
     }
 
-    public function resolve()
+    public function resolve(): void
     {
         $path = $this->requests->getPath();
         $method = strtolower($this->requests->getMethod());
         $callback = $this->routes[$method][$path] ?? false;
+
         if ($callback === false) {
             $this->response->setResponse(404);
             throw new NotFoundException();
-
             exit;
         }
+
         if (is_string($callback)) {
             $content = $this->renderView($callback, null);
             $layout = $this->renderLayout();
-
             echo str_replace('{{content}}', $content, $layout);
             exit;
         }
+
         if (is_array($callback)) {
 
             $controller = new $callback[0]();
@@ -62,16 +62,17 @@ class Router
         echo call_user_func($callback, $this->requests, $this->response);
     }
 
-    public function renderViewOutside($path, $params = null)
+    public function renderViewOutside($path, $params = null): void
     {
 
         $content = $this->renderView($path, $params);
         $layout = $this->renderLayout();
         echo str_replace('{{content}}', $content, $layout);
+
         exit;
     }
 
-    public function renderView($path, $params)
+    public function renderView($path, $params): string
     {
         if ($params) {
 
@@ -81,14 +82,16 @@ class Router
         }
         ob_start();
         include_once Aplication::$ROOT_PATH . "/../views/$path.php";
+
         return ob_get_clean();
     }
 
-    protected function renderLayout()
+    protected function renderLayout(): string
     {
         $layoutPath = Aplication::$app->controller->layout;
         ob_start();
         include_once Aplication::$ROOT_PATH . "/../views/layout/$layoutPath.php";
+
         return ob_get_clean();
     }
 }

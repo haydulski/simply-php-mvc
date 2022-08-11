@@ -11,7 +11,8 @@ class AuthMiddleware extends BaseMiddleware
     {
         $this->actions = $actions;
     }
-    public function execute()
+
+    public function execute(): void
     {
 
         if (Aplication::isGuest()) {

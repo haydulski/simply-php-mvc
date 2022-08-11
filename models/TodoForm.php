@@ -11,16 +11,19 @@ class TodoForm extends DbModel
     public string $status = '';
     public string $userID = '';
     public User $user;
+
     public function rules(): array
     {
         return [
             'task' => [self::RULE_REQUIRED],
         ];
     }
+
     public function attributes(): array
     {
         return ["task", "status"];
     }
+
     public function labels(): array
     {
         return ["task" => "New task", "status" => "Status of task"];
@@ -30,11 +33,13 @@ class TodoForm extends DbModel
     {
         return "todo";
     }
+
     public static function primaryKey(): string
     {
         return "ID";
     }
-    public function addNewTask()
+
+    public function addNewTask(): bool
     {
         $this->userID = Aplication::$app->session->get('user');
         $tableName = $this->tableName();
@@ -49,7 +54,8 @@ class TodoForm extends DbModel
         $statement->execute();
         return true;
     }
-    public function getAllTasks()
+
+    public function getAllTasks(): array|bool
     {
         $this->userID = Aplication::$app->session->get('user');
 
@@ -60,14 +66,16 @@ class TodoForm extends DbModel
 
         return $result;
     }
-    public function deleteTask($id)
+
+    public function deleteTask($id): void
     {
         $tableName = $this->tableName();
         $statment = self::prepare("DELETE FROM $tableName WHERE ID = :id");
         $statment->bindValue(':id', $id);
         $statment->execute();
     }
-    public function editTask($id, $newValue)
+
+    public function editTask($id, $newValue): bool
     {
         $tableName = $this->tableName();
         $statment = self::prepare("UPDATE $tableName SET Status = :status WHERE ID = :id");

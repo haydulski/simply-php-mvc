@@ -10,6 +10,7 @@ class Contact extends Model
     public string $email = '';
     public string $message = '';
     public string $passtext = '';
+
     public function rules(): array
     {
         return [
@@ -18,10 +19,12 @@ class Contact extends Model
             'passtext' => [self::RULE_CAPTCHA]
         ];
     }
+
     public function attributes(): array
     {
         return ["email", "message", "passtext"];
     }
+
     public function labels(): array
     {
         return ["email" => "Your email", "message" => "Your message"];
