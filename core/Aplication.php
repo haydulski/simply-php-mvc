@@ -19,7 +19,7 @@ class Aplication
     public ?DbModel $user;
     public string $userClass;
 
-    public function __construct($path, array $config)
+    public function __construct(string $path, array $config)
     {
         self::$ROOT_PATH = $path;
         self::$ROOT_DIR = __DIR__;
