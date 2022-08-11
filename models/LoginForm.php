@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-use app\core\Aplication;
+use app\core\Application;
 use app\core\Model;
 
 class LoginForm extends Model
@@ -32,7 +32,7 @@ class LoginForm extends Model
         return ["email" => "Your email", "password" => "Password"];
     }
 
-    public function login(): Aplication|bool
+    public function login(): Application|bool
     {
         $user = User::findUser(['email' => $this->email]);
         if (!$user) {
@@ -44,6 +44,6 @@ class LoginForm extends Model
             $this->addError('password', self::RULE_WRONGPASS);
             return false;
         }
-        return Aplication::$app->login($user);
+        return Application::$app->login($user);
     }
 }

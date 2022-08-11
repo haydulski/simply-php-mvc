@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace app\core;
 
-class Aplication
+class Application
 {
     public Router $router;
     public Requests $requests;

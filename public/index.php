@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . "/../vendor/autoload.php";
 
-use app\core\Aplication;
+use app\core\Application;
 use app\controllers\SiteController;
 use app\controllers\AuthController;
 use app\models\User;
@@ -19,7 +19,7 @@ $config = [
 ];
 
 $path = __DIR__;
-$app = new Aplication($path, $config);
+$app = new Application($path, $config);
 
 $app->router->get('/', [SiteController::class, 'handleHome']);
 $app->router->get('/contact', [SiteController::class, 'contact']);

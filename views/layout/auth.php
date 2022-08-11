@@ -1,6 +1,6 @@
 <?php
 
-use app\core\Aplication;
+use app\core\Application;
 ?>
 <!doctype html>
 <html lang="en">
@@ -41,7 +41,7 @@ use app\core\Aplication;
                     </li>
 
                 </ul>
-                <?php if (Aplication::isGuest()) : ?>
+                <?php if (Application::isGuest()) : ?>
 
                     <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
                         <li class="nav-item">
@@ -58,7 +58,7 @@ use app\core\Aplication;
                             <a class="nav-link active" aria-current="page" href="/profile">My profile</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/logout">Logout <?php echo Aplication::$app->user->{'name'} ?></a>
+                            <a class="nav-link active" aria-current="page" href="/logout">Logout <?php echo Application::$app->user->{'name'} ?></a>
                         </li>
 
                     </ul>
@@ -67,9 +67,9 @@ use app\core\Aplication;
             </div>
         </div>
     </nav>
-    <?php if (Aplication::$app->session->getFlash('danger')) : ?>
+    <?php if (Application::$app->session->getFlash('danger')) : ?>
         <div class="alert alert-danger">
-            <?php echo Aplication::$app->session->getFlash('danger'); ?>
+            <?php echo Application::$app->session->getFlash('danger'); ?>
         </div>
     <?php endif; ?>
     <div class="container">

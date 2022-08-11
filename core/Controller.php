@@ -10,9 +10,9 @@ class Controller
     public array $middlewares = [];
     public string $action = '';
 
-    public function render($view, $params = null): Aplication
+    public function render($view, $params = null): Application
     {
-        return Aplication::$app->router->renderViewOutside($view, $params);
+        return Application::$app->router->renderViewOutside($view, $params);
     }
 
     public function setLayout($layout): void

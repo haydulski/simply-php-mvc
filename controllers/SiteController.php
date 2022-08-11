@@ -7,7 +7,7 @@ namespace app\controllers;
 use app\core\Controller;
 use app\core\Requests;
 use app\models\Contact;
-use app\core\Aplication;
+use app\core\Application;
 
 class SiteController extends Controller
 {
@@ -17,7 +17,7 @@ class SiteController extends Controller
         return "Handled subimitng data";
     }
 
-    public function handleHome(): Aplication
+    public function handleHome(): Application
     {
         $params = [
             "name" => "Damian wita",
@@ -32,11 +32,11 @@ class SiteController extends Controller
         if ($req->getMethod() === "POST") {
             $contactData->loadData($req->getBody());
             if ($contactData->validate()) {
-                Aplication::$app->session->setFlash('success', 'Your message is coming to us!');
-                Aplication::$app->response->redirect('/contact');
+                Application::$app->session->setFlash('success', 'Your message is coming to us!');
+                Application::$app->response->redirect('/contact');
                 exit;
             }
-            Aplication::$app->session->setFlash('danger', 'Confirm your humanity...');
+            Application::$app->session->setFlash('danger', 'Confirm your humanity...');
             $this->render('contact', ["model" => $contactData]);
             return;
         } else {

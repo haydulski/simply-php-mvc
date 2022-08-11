@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-use app\core\Aplication;
+use app\core\Application;
 use app\core\DbModel;
 
 class TodoForm extends DbModel
@@ -41,7 +41,7 @@ class TodoForm extends DbModel
 
     public function addNewTask(): bool
     {
-        $this->userID = Aplication::$app->session->get('user');
+        $this->userID = Application::$app->session->get('user');
         $tableName = $this->tableName();
         $attributes = $this->attributes();
         $attributes[] = 'userID';
@@ -57,7 +57,7 @@ class TodoForm extends DbModel
 
     public function getAllTasks(): array|bool
     {
-        $this->userID = Aplication::$app->session->get('user');
+        $this->userID = Application::$app->session->get('user');
 
         $tableName = $this->tableName();
         $statment = self::prepare("SELECT * FROM $tableName WHERE userID LIKE $this->userID ORDER BY Date DESC");

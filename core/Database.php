@@ -18,7 +18,7 @@ class Database
     {
         $this->createMigrationTable();
         $applied = $this->getAplliedMigrations();
-        $files = scandir(Aplication::$ROOT_DIR . "/migrations");
+        $files = scandir(Application::$ROOT_DIR . "/migrations");
         $toApplied = array_diff($files, $applied);
         $newMigrations = [];
 
@@ -27,7 +27,7 @@ class Database
             if ($migration === '.' || $migration === "..") {
                 continue;
             }
-            require_once Aplication::$ROOT_DIR . "/migrations/" . $migration;
+            require_once Application::$ROOT_DIR . "/migrations/" . $migration;
             $class = pathinfo($migration, PATHINFO_FILENAME);
             $instance = new $class();
             $instance->up();

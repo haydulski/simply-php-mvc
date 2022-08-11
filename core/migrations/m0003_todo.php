@@ -1,12 +1,12 @@
  <?php
 
-    use app\core\Aplication;
+    use app\core\Application;
 
     class m0003_todo
     {
         public function up(): void
         {
-            $db = Aplication::$app->db;
+            $db = Application::$app->db;
             $db->pdo->exec(
                 "CREATE TABLE IF NOT EXISTS `todo`
                 (`ID` INT NOT NULL AUTO_INCREMENT ,

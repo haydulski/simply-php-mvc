@@ -1,12 +1,12 @@
 <?php
 
-use app\core\Aplication;
+use app\core\Application;
 
 class m0004_user
 {
     public function up(): void
     {
-        $db = Aplication::$app->db;
+        $db = Application::$app->db;
         $db->pdo->exec("CREATE TABLE IF NOT EXISTS `User` 
         ( `ID` INT NOT NULL AUTO_INCREMENT ,
         `Name` VARCHAR(255) NOT NULL,

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace app\controllers;
 
-use app\core\Aplication;
+use app\core\Application;
 use app\core\Requests;
 use app\core\Controller;
 use app\core\Response;
@@ -33,7 +33,7 @@ class AuthController extends Controller
                 return;
             }
             $this->setLayout('auth');
-            Aplication::$app->session->setFlash('danger', 'Confirm your humanity...');
+            Application::$app->session->setFlash('danger', 'Confirm your humanity...');
             $this->render('login', ["model" => $loginData]);
 
             return;
@@ -43,19 +43,19 @@ class AuthController extends Controller
         }
     }
 
-    public function register(Requests $req): Aplication
+    public function register(Requests $req): Application
     {
         $registerData = new User();
         if ($req->getMethod() === "POST") {
             $registerData->loadData($req->getBody());
 
             if ($registerData->validate() && $registerData->register()) {
-                Aplication::$app->session->setFlash('success', 'Your account was registered');
-                Aplication::$app->response->redirect('/');
+                Application::$app->session->setFlash('success', 'Your account was registered');
+                Application::$app->response->redirect('/');
                 exit;
             }
             $this->setLayout('auth');
-            Aplication::$app->session->setFlash('danger', 'Confirm your humanity...');
+            Application::$app->session->setFlash('danger', 'Confirm your humanity...');
 
             return $this->render('register', ["model" => $registerData]);
         }
@@ -67,11 +67,11 @@ class AuthController extends Controller
 
     public function logout(Response $res): void
     {
-        Aplication::$app->logout();
+        Application::$app->logout();
         $res->redirect('/');
     }
 
-    public function profile(Requests $req): Aplication
+    public function profile(Requests $req): Application
     {
         $todoForm = new TodoForm();
         if ($req->getMethod() === "POST") {
@@ -82,28 +82,28 @@ class AuthController extends Controller
             }
 
             $params = [
-                "name" => Aplication::$app->user->{'name'},
-                "surname" => Aplication::$app->user->{'surname'},
+                "name" => Application::$app->user->{'name'},
+                "surname" => Application::$app->user->{'surname'},
             ];
             return $this->render('profile', $params);
         }
         $params = [
-            "name" => Aplication::$app->user->{'name'},
-            "surname" => Aplication::$app->user->{'surname'},
+            "name" => Application::$app->user->{'name'},
+            "surname" => Application::$app->user->{'surname'},
         ];
 
         return $this->render('profile', $params);
     }
 
-    public function addNewTodo(Requests $req): Aplication
+    public function addNewTodo(Requests $req): Application
     {
         $todoForm = new TodoForm();
         if ($req->getMethod() === "POST") {
             $todoForm->loadData($req->getBody());
 
             if ($todoForm->validate() && $todoForm->addNewTask()) {
-                Aplication::$app->session->setFlash('success', 'You added new task');
-                Aplication::$app->response->redirect('/profile');
+                Application::$app->session->setFlash('success', 'You added new task');
+                Application::$app->response->redirect('/profile');
                 exit;
             }
 
@@ -112,7 +112,7 @@ class AuthController extends Controller
         $this->render('addtodo', ["model" => $todoForm]);
     }
 
-    public function editTodo(Requests $req): Aplication
+    public function editTodo(Requests $req): Application
     {
         $todoForm = new TodoForm();
         $todoId = $_GET['id'];
@@ -120,8 +120,8 @@ class AuthController extends Controller
             $newValue = $_POST['status'];
 
             if ($todoForm->editTask($todoId, $newValue)) {
-                Aplication::$app->session->setFlash('success', 'Task has been edited');
-                Aplication::$app->response->redirect('/profile');
+                Application::$app->session->setFlash('success', 'Task has been edited');
+                Application::$app->response->redirect('/profile');
                 exit;
             }
 

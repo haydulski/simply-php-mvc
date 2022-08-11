@@ -51,7 +51,7 @@ class Router
         if (is_array($callback)) {
 
             $controller = new $callback[0]();
-            Aplication::$app->controller = $controller;
+            Application::$app->controller = $controller;
             $controller->action = $callback[1];
             $callback[0] = $controller;
             foreach ($controller->middlewares as $midd) {
@@ -81,16 +81,16 @@ class Router
             }
         }
         ob_start();
-        include_once Aplication::$ROOT_PATH . "/../views/$path.php";
+        include_once Application::$ROOT_PATH . "/../views/$path.php";
 
         return ob_get_clean();
     }
 
     protected function renderLayout(): string
     {
-        $layoutPath = Aplication::$app->controller->layout;
+        $layoutPath = Application::$app->controller->layout;
         ob_start();
-        include_once Aplication::$ROOT_PATH . "/../views/layout/$layoutPath.php";
+        include_once Application::$ROOT_PATH . "/../views/layout/$layoutPath.php";
 
         return ob_get_clean();
     }
