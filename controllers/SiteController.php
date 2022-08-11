@@ -1,7 +1,8 @@
 <?php
 
-namespace app\controllers;
+declare(strict_types=1);
 
+namespace app\controllers;
 
 use app\core\Controller;
 use app\core\Requests;
@@ -16,6 +17,7 @@ class SiteController extends Controller
         $body = $req->getBody();
         return "Handled subimitng data";
     }
+
     public function handleHome()
     {
         $params = [
@@ -23,6 +25,7 @@ class SiteController extends Controller
         ];
         return $this->render('home', $params);
     }
+
     public function contact(Requests $req, Response $res)
     {
         $contactData = new Contact();

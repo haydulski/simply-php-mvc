@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace app\controllers;
 
 use app\core\Aplication;
@@ -19,6 +21,7 @@ class AuthController extends Controller
         $this->registerMiddleware(new AuthMiddleware(['addNewTodo']));
         $this->registerMiddleware(new AuthMiddleware(['editTodo']));
     }
+
     public function login(Requests $req, Response $res)
     {
         $loginData = new LoginForm();
@@ -63,11 +66,13 @@ class AuthController extends Controller
 
         return $this->render('register', ["model" => $registerData]);
     }
+
     public function logout(Requests $req, Response $res)
     {
         Aplication::$app->logout();
         $res->redirect('/');
     }
+
     public function profile(Requests $req)
     {
         $todoForm = new TodoForm();
@@ -88,8 +93,10 @@ class AuthController extends Controller
             "name" => Aplication::$app->user->{'name'},
             "surname" => Aplication::$app->user->{'surname'},
         ];
+
         return $this->render('profile', $params);
     }
+
     public function addNewTodo(Requests $req)
     {
         $todoForm = new TodoForm();
@@ -106,6 +113,7 @@ class AuthController extends Controller
         }
         $this->render('addtodo', ["model" => $todoForm]);
     }
+
     public function editTodo(Requests $req)
     {
         $todoForm = new TodoForm();

@@ -7,22 +7,29 @@ use app\core\exception\NotFoundException;
 class Router
 {
     protected array $routes = [];
+
     public Requests $requests;
+
     public Response $response;
+
     public string $title = '';
+
     public function __construct(Requests $requests, Response $response)
     {
         $this->requests = $requests;
         $this->response = $response;
     }
+
     public function get($path, $callback)
     {
         $this->routes['get'][$path] = $callback;
     }
+
     public function post($path, $callback)
     {
         $this->routes['post'][$path] = $callback;
     }
+
     public function resolve()
     {
         $path = $this->requests->getPath();
@@ -54,6 +61,7 @@ class Router
 
         echo call_user_func($callback, $this->requests, $this->response);
     }
+
     public function renderViewOutside($path, $params = null)
     {
 
@@ -62,6 +70,7 @@ class Router
         echo str_replace('{{content}}', $content, $layout);
         exit;
     }
+
     public function renderView($path, $params)
     {
         if ($params) {
@@ -74,6 +83,7 @@ class Router
         include_once Aplication::$ROOT_PATH . "/../views/$path.php";
         return ob_get_clean();
     }
+
     protected function renderLayout()
     {
         $layoutPath = Aplication::$app->controller->layout;

@@ -52,10 +52,13 @@ class TodoForm extends DbModel
     public function getAllTasks()
     {
         $this->userID = Aplication::$app->session->get('user');
+
         $tableName = $this->tableName();
         $statment = self::prepare("SELECT * FROM $tableName WHERE userID LIKE $this->userID ORDER BY Date DESC");
         $statment->execute();
-        return $statment->fetchAll(\PDO::FETCH_ASSOC);
+        $result = $statment->fetchAll(\PDO::FETCH_ASSOC);
+
+        return $result;
     }
     public function deleteTask($id)
     {

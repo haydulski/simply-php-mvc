@@ -35,7 +35,7 @@ class LoginForm extends Model
             return false;
         }
         if (!password_verify($this->password, $user->password)) {
-
+            var_dump($user);
             $this->addError('password', self::RULE_WRONGPASS);
             return false;
         }

@@ -32,7 +32,7 @@ class User extends DbModel
 
     public function attributes(): array
     {
-        return ["name", "surname", "email", "password", "status", "passtext"];
+        return ["name", "surname", "email", "password", "status"];
     }
 
     public function rules(): array

@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace app\core;
 
-use app\models\User;
 
 class Aplication
 {
@@ -41,7 +42,8 @@ class Aplication
             $this->user = null;
         }
     }
-    public function run()
+
+    public function run(): void
     {
         try {
             echo $this->router->resolve();
@@ -51,15 +53,18 @@ class Aplication
             ]);
         }
     }
-    public function getController()
+
+    public function getController(): Controller
     {
         return $this->controller;
     }
-    public function setController($controller)
+
+    public function setController($controller): void
     {
         $this->controller = $controller;
     }
-    public function login(DbModel $user)
+
+    public function login(DbModel $user): bool
     {
         $this->user = $user;
         $primaryKey = $user->primaryKey();
@@ -67,13 +72,14 @@ class Aplication
         $this->session->set('user', $primaryValue);
         return true;
     }
-    public function logout()
+
+    public function logout(): void
     {
         $this->user = null;
-
         $this->session->remove('user');
     }
-    public static function isGuest()
+
+    public static function isGuest(): bool
     {
         return !self::$app->user;
     }

@@ -8,8 +8,8 @@ $this->title = "profile" ?>
 $toDoForm1 =  new TodoForm();
 $todoList = $toDoForm1->getAllTasks();
 $listNumber = 0;
-
 ?>
+
 <div class="row mb-5 mt-5">
     <div class="col-12">
         <h1>Profile page</h1>
@@ -18,7 +18,6 @@ $listNumber = 0;
 <div class="row mt-5">
     <div class="col-12 ">
         <h2>Hi <?php echo $name; ?> , your TODO list:</h2>
-
     </div>
 </div>
 <div class="row">
@@ -37,11 +36,11 @@ $listNumber = 0;
                 <tr>
                     <?php $listNumber += 1; ?>
                     <th scope="row"><?php echo $listNumber; ?></th>
-                    <td class="td-task"><?php echo $todo['Task'] ?></td>
+                    <td class="td-task"><?php echo $todo['task'] ?></td>
                     <td class="td-status">
-                        <?php if ($todo['Status'] === '-1') : ?>
+                        <?php if ($todo['status'] === '-1') : ?>
                             <p class="btn btn-danger">To do</p>
-                        <?php elseif ($todo['Status'] === '1') : ?>
+                        <?php elseif ($todo['status'] === '1') : ?>
                             <p class="btn btn-success">Complete</p>
                         <?php else : ?>
                             <p class="btn btn-info">In progress</p>

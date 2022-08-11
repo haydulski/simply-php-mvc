@@ -15,7 +15,7 @@ abstract class Model
     public const RULE_CAPTCHA = "captcha";
     public array $errors = ["name" => [], "surname" => [], "email" => [], "password" => [], "passwordConfirm" => [], "message" => [], "task" => [], "status" => [], "passtext" => []];
 
-    public function loadData($data)
+    public function loadData($data): void
     {
         foreach ($data as $key => $value) {
             if (property_exists($this, $key)) {
@@ -23,12 +23,15 @@ abstract class Model
             }
         }
     }
+
     abstract function rules(): array;
+
     public function labels(): array
     {
         return [];
     }
-    public function validate()
+
+    public function validate(): bool
     {
         foreach ($this->rules() as $attribute => $rules) {
             $value = $this->{$attribute};
@@ -78,11 +81,13 @@ abstract class Model
             return false;
         }
     }
+
     public function addError($att, $type)
     {
 
         $this->errors[$att][] = $this->errorMessages()[$type] ?? '';
     }
+
     public function errorMessages(): array
     {
         return [
@@ -97,13 +102,17 @@ abstract class Model
             self::RULE_CAPTCHA => "Incorrect number",
         ];
     }
-    public function hasError($attr)
+
+    public function hasError($attr): bool
     {
         if ($this->errors[$attr] !== []) {
+
             return true;
         }
+        return false;
     }
-    public function getFirstError($attr)
+
+    public function getFirstError($attr): string
     {
         return empty($this->errors[$attr]) ? '' : $this->errors[$attr][0];
     }
